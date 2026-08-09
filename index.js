@@ -96,17 +96,16 @@
   }
 
   // ---- нативная генерация через ST ----
+  // Через полный конвейер (generateQuietPrompt) — с карточкой/джейлбреком пресета, иначе «голый»
+  // generateRaw режется контент-фильтром провайдера (напр. Gemini: PROHIBITED_CONTENT / prompt_blocked).
   async function genOptions() {
-    var c = ctx();
-    var transcript = buildTranscript();
-    var user = 'Recent scene transcript:\n\n' + transcript + '\n\nGive me EXACTLY ' + VARIANTS_COUNT + ' options for how to move the story forward now.';
-    return await c.generateRaw({ prompt: user, systemPrompt: OPTIONS_SYSTEM });
+    var instr = '[OOC planning task — do NOT write story prose and do NOT continue the roleplay. '
+      + OPTIONS_SYSTEM + ' Give EXACTLY ' + VARIANTS_COUNT + ' options now, as ' + VARIANTS_COUNT + ' lines only.]';
+    return await ctx().generateQuietPrompt({ quietPrompt: instr, quietToLoud: false });
   }
   async function genTeaser() {
-    var c = ctx();
-    var transcript = buildTranscript();
-    var user = 'Scene transcript:\n\n' + transcript + '\n\nGive the one-line teaser now, only the short phrase.';
-    return await c.generateRaw({ prompt: user, systemPrompt: TEASER_SYSTEM });
+    var instr = '[OOC task — do NOT continue the roleplay. ' + TEASER_SYSTEM + ' Output only the short teaser phrase now.]';
+    return await ctx().generateQuietPrompt({ quietPrompt: instr, quietToLoud: false });
   }
   // Полный ход бота: генерим «громко» с инструкцией, затем дописываем как сообщение персонажа.
   async function genMove(quietPrompt) {
