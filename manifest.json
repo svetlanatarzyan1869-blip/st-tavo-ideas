@@ -1,10 +1,9 @@
 {
-  "display_name": "Tavo · Идеи для сюжета",
+  "display_name": "Tavo · Идеи для сюжета (отключено)",
   "loading_order": 100,
   "js": "index.js",
-  "css": "style.css",
   "author": "Люба (порт из Tavo)",
-  "version": "1.0.0",
-  "homePage": "https://t.me/+3qj7eHn2WWQ5ZjNi",
-  "auto_update": false
+  "version": "2.0.0",
+  "auto_update": true,
+  "homePage": "https://t.me/+3qj7eHn2WWQ5ZjNi"
 }
